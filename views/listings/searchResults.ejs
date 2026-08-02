@@ -1,0 +1,38 @@
+<% layout("/layouts/boilerPlate") %>
+
+<div class="mt-4">
+  <h4 class="mb-4">Results for "<%= searchQuery %>"</h4>
+
+  <% if (results.length === 0) { %>
+  <p class="text-muted">No listings found for your search.</p>
+  <% } else { %>
+  <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-4 row-cols-adjust">
+    <% results.forEach(result => { %>
+    <a href="/listings/<%= result._id %>" class="listing-link">
+      <div class="card col listing-card">
+        <img
+          src="<%= result.image && result.image.url ? result.image.url : '/images/placeholder.svg' %>"
+          onerror="this.onerror=null;this.src='/images/placeholder.svg'"
+          class="card-img-top listing-index-img"
+          alt="listing_image"
+        />
+        <div class="card-img-overlay"></div>
+        <div class="listing-card-body mt-2">
+          <p class="listing-card-text">
+            <b><%= result.title %></b> <br />
+            &#8377; <%= result.price ? result.price.toLocaleString("en-IN") : "NA" %> / night
+          </p>
+          <% if (result.category && result.category.length) { %>
+          <% [].concat(result.category).forEach(cat => { %>
+          <span class="category-badge">
+            <i class="fa-solid fa-tag"></i> <%= cat.replace(/-/g, " ") %>
+          </span>
+          <% }) %>
+          <% } %>
+        </div>
+      </div>
+    </a>
+    <% }) %>
+  </div>
+  <% } %>
+</div>

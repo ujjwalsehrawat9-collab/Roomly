@@ -1,0 +1,36 @@
+<% layout("/layouts/boilerPlate") %>
+
+<div class="container mt-3">
+  <div class="row justify-content-center">
+    <div class="login-signup-form-inp">
+      <h3 class="mb-3">Login to Locasa</h3>
+      <form action="/login" method="post" novalidate class="needs-validation">
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input
+            name="username"
+            id="username"
+            type="text"
+            class="form-control"
+            placeholder="Enter Username"
+            required
+          />
+          <div class="invalid-feedback">Please enter your username.</div>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            name="password"
+            id="password"
+            type="password"
+            class="form-control"
+            placeholder="Enter Password"
+            required
+          />
+          <div class="invalid-feedback">Please enter your password.</div>
+        </div>
+        <button class="btn btn-success">Login</button>
+      </form>
+    </div>
+  </div>
+</div>

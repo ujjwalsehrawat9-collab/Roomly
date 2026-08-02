@@ -1,0 +1,341 @@
+<% layout("/layouts/boilerPlate") %>
+
+<div class="row">
+  <div class="col-lg-8 col-md-10 col-sm-12 mx-auto">
+    <div class="mt-3">
+      <h3 class="listing-title"><%= listing.title %></h3>
+    </div>
+
+    <div class="card show-card listing-card">
+      <img
+        src="<%= listing.image && listing.image.url ? listing.image.url : '/images/placeholder.svg' %>"
+        onerror="this.onerror=null;this.src='/images/placeholder.svg'"
+        class="card-img-top show-img"
+        alt="listing_image"
+      />
+      <div class="listing-card-body mt-3">
+        <p class="listing-card-text">
+          <b>Hosted By: </b
+          ><i
+            ><%= listing.owner && listing.owner.username ? listing.owner.username : "Unknown Host" %></i
+          >
+        </p>
+        <p class="listing-card-text">
+          <b>Description: </b><%= listing.description %>
+        </p>
+        <p class="listing-card-text">
+          <b>Cost: </b>&#8377; <%= listing.price ? listing.price.toLocaleString("en-IN") : "NA" %>
+        </p>
+        <p class="listing-card-text">
+          <b>Category:</b>
+          <% if (listing.category && listing.category.length) { %>
+          <% [].concat(listing.category).forEach(cat => { %>
+          <span class="category-badge">
+            <i class="fa-solid fa-tag"></i> <%= cat.replace(/-/g, " ") %>
+          </span>
+          <% }) %>
+          <% } else { %>
+          Uncategorized
+          <% } %>
+        </p>
+        <p class="listing-card-text">
+          <b>Location:&nbsp;&nbsp;</b
+          ><i class="fa-solid fa-location-dot">&nbsp;</i><%= listing.location %>
+        </p>
+        <p class="listing-card-text">
+          <b>Country:&nbsp;&nbsp;</b
+          ><i class="fa-solid fa-globe">&nbsp;</i><%= listing.country %>
+        </p>
+      </div>
+    </div>
+
+    <div class="show-btns mt-3">
+      <% if (currUser) { %>
+      <button class="btn btn-success reserve-btn" id="reserveBtn" type="button">
+        Reserve
+      </button>
+      <% } else { %>
+      <a href="/login" class="btn btn-success reserve-btn">Log in to Reserve</a>
+      <% } %>
+    </div>
+
+    <% if (currUser) { %>
+    <!-- Reserve success modal (frontend only, no booking backend) -->
+    <div class="modal fade" id="reserveModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title w-100">Reservation Requested</h5>
+          </div>
+          <div class="modal-body">
+            <div class="reserve-success-icon">
+              <i class="fa-solid fa-check"></i>
+            </div>
+            <p>Reservation request submitted successfully!</p>
+            <p class="text-muted" style="font-size: 0.9rem;">
+              Our team will reach out with confirmation details shortly.
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% } %>
+
+    <% if(currUser && listing.owner && listing.owner._id && listing.owner._id.equals(currUser._id)){ %>
+    <div class="show-btns mt-3">
+      <a href="/listings/<%= listing._id %>/edit" class="btn btn-danger">Edit this Listing</a>
+      <form action="/listings/<%= listing._id %>?_method=DELETE" method="post" onsubmit="return confirmDelete();">
+        <button type="submit" class="btn btn-dark">Delete this Listing</button>
+      </form>
+    </div>
+    <% } %>
+
+    <% if(currUser){ %>
+    <div class="col-6 offset-3"><hr /></div>
+    <div class="mt-3">
+      <h4>Leave a Review</h4>
+      <form
+        class="mt-3 needs-validation"
+        novalidate
+        action="/listings/<%= listing._id %>/reviews"
+        method="POST"
+      >
+        <div class="mt-3">
+          <label class="form-label" for="rating">Rating</label>
+          <fieldset class="starability-slot">
+            <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
+            <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+            <label for="first-rate1" title="Terrible">1 star</label>
+            <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+            <label for="first-rate2" title="Not good">2 stars</label>
+            <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+            <label for="first-rate3" title="Average">3 stars</label>
+            <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+            <label for="first-rate4" title="Very good">4 stars</label>
+            <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+            <label for="first-rate5" title="Amazing">5 stars</label>
+          </fieldset>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="comment">Comments</label>
+          <textarea class="form-control" name="review[comment]" id="comment" cols="30" rows="5" required></textarea>
+          <div class="invalid-feedback">Please add some comments for your review</div>
+        </div>
+        <div class="show-btns">
+          <button class="btn btn-dark">Submit</button>
+        </div>
+      </form>
+    </div>
+    <% } %>
+
+    <div class="col-6 offset-3"><hr /></div>
+
+    <% if(listing.reviews && listing.reviews.length > 0){ %>
+    <div class="mt-3">
+      <h4>All Reviews</h4>
+      <div class="row justify-content-left">
+        <% for (let review of listing.reviews) {
+             const isAuthor = currUser && review.author && currUser._id.equals(review.author._id);
+             const canDelete = isAuthor || (currUser && listing.owner && listing.owner._id.equals(currUser._id));
+        %>
+        <div class="col-12 col-md-6 col-lg-6 d-flex mt-3">
+          <div class="card mb-1 flex-grow-1">
+            <div class="card-body d-flex flex-column justify-content-between">
+
+              <!-- Read-only view -->
+              <div id="reviewDisplay-<%= review._id %>">
+                <h5 class="card-title">
+                  <i class="fa-solid fa-circle-user fa-lg" style="color: #ff0000;">&nbsp;</i>
+                  <i><%= review.author && review.author.username ? review.author.username : "Anonymous" %></i>
+                </h5>
+                <p class="starability-result card-text" data-rating="<%= review.rating %>"></p>
+                <p class="card-text review-comment"><%= review.comment %></p>
+                <div class="d-flex gap-2 mt-2">
+                  <% if(isAuthor) { %>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-dark"
+                    onclick="toggleEditReview('<%= review._id %>')"
+                  >
+                    Edit
+                  </button>
+                  <% } %>
+                  <% if(canDelete) { %>
+                  <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST" class="d-inline">
+                    <button class="btn btn-sm btn-danger">Delete</button>
+                  </form>
+                  <% } %>
+                </div>
+              </div>
+
+              <% if(isAuthor) { %>
+              <!-- Inline edit form (hidden by default) -->
+              <div id="reviewEdit-<%= review._id %>" class="d-none mt-2">
+                <form
+                  action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=PUT"
+                  method="POST"
+                  class="needs-validation"
+                  novalidate
+                >
+                  <fieldset class="starability-slot">
+                    <input type="radio" id="no-rate-<%= review._id %>" class="input-no-rate" name="review[rating]" value="1" aria-label="No rating." />
+                    <input type="radio" id="rate1-<%= review._id %>" name="review[rating]" value="1" <%= review.rating === 1 ? "checked" : "" %> />
+                    <label for="rate1-<%= review._id %>" title="Terrible">1 star</label>
+                    <input type="radio" id="rate2-<%= review._id %>" name="review[rating]" value="2" <%= review.rating === 2 ? "checked" : "" %> />
+                    <label for="rate2-<%= review._id %>" title="Not good">2 stars</label>
+                    <input type="radio" id="rate3-<%= review._id %>" name="review[rating]" value="3" <%= review.rating === 3 ? "checked" : "" %> />
+                    <label for="rate3-<%= review._id %>" title="Average">3 stars</label>
+                    <input type="radio" id="rate4-<%= review._id %>" name="review[rating]" value="4" <%= review.rating === 4 ? "checked" : "" %> />
+                    <label for="rate4-<%= review._id %>" title="Very good">4 stars</label>
+                    <input type="radio" id="rate5-<%= review._id %>" name="review[rating]" value="5" <%= review.rating === 5 ? "checked" : "" %> />
+                    <label for="rate5-<%= review._id %>" title="Amazing">5 stars</label>
+                  </fieldset>
+                  <textarea
+                    name="review[comment]"
+                    class="form-control mt-2"
+                    rows="3"
+                    required
+                  ><%= review.comment %></textarea>
+                  <div class="invalid-feedback">Please add some comments for your review</div>
+                  <div class="d-flex gap-2 mt-2">
+                    <button class="btn btn-sm btn-dark">Save changes</button>
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-secondary"
+                      onclick="toggleEditReview('<%= review._id %>')"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              </div>
+              <% } %>
+
+            </div>
+          </div>
+        </div>
+        <% } %>
+      </div>
+    </div>
+    <div class="col-6 offset-3"><hr /></div>
+    <% } %>
+
+    <div class="mt-3">
+      <h4>What this place offers</h4>
+      <div class="offers">
+        <i class="ri-restaurant-line"><span>Kitchen</span></i>
+        <i class="ri-car-fill"><span>Parking</span></i>
+        <i class="ri-t-shirt-air-fill"><span>Air conditioning</span></i>
+        <i class="ri-tv-2-line"><span>TV</span></i>
+        <i class="ri-vidicon-line"><span>Security cameras</span></i>
+        <i class="ri-wifi-line"><span>Wifi</span></i>
+      </div>
+      <div class="d-flex justify-content-center mt-2">
+        <button id="offers" type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#amenitiesModal">
+          Show all amenities
+        </button>
+      </div>
+
+      <div class="modal fade" id="amenitiesModal" tabindex="-1" aria-labelledby="amenitiesModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="amenitiesModalLabel">What this place offers</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <ul>
+                <h5>Scenic views</h5>
+                <li>Lake view</li>
+                <li>Mountain view</li>
+                <li>Pool view</li>
+                <hr />
+              </ul>
+              <ul>
+                <h5>Bathrooms</h5>
+                <li>Cleaning products</li>
+                <li>Shampoo</li>
+                <li>Hot Water</li>
+                <hr />
+              </ul>
+              <ul>
+                <h5>Bedroom and laundry</h5>
+                <li>Essentials</li>
+                <li>Hangers</li>
+                <li>Bed linen</li>
+                <hr />
+              </ul>
+              <ul>
+                <h5>Entertainment</h5>
+                <li>TV with standard cable/satellite</li>
+                <li>Sound system with Bluetooth and aux</li>
+                <li>Pool table</li>
+                <hr />
+              </ul>
+              <ul>
+                <h5>Outdoor</h5>
+                <li>Patio or balcony</li>
+                <li>Garden</li>
+                <li>Hammock</li>
+                <li>Firepit</li>
+                <li>BBQ grill</li>
+                <hr />
+              </ul>
+              <ul>
+                <h5>Kitchen and dining</h5>
+                <li>Dishes and cutlery</li>
+                <li>Barbecue utensils</li>
+                <li>Dining table</li>
+                <li>Freezer</li>
+                <hr />
+              </ul>
+              <ul>
+                <h5>Location features</h5>
+                <li>Waterfront</li>
+                <li>Lake access</li>
+                <li>Private entrance</li>
+              </ul>
+              <ul>
+                <h6>and many more...</h6>
+              </ul>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 offset-3"><hr /></div>
+
+    <div class="mt-3" id="services">
+      <h4>Add-on services</h4>
+      <p>After booking this home, a trip designer can arrange any of these add-on services.</p>
+      <div class="offers">
+        <i class="ri-flight-takeoff-fill"><span>Airport Transfer</span></i>
+        <i class="ri-goblet-line"><span>Butler</span></i>
+        <i class="ri-luggage-cart-fill"><span>Pre-stocking</span></i>
+        <i class="ri-hand-sanitizer-fill"><span>Cleaning</span></i>
+      </div>
+    </div>
+
+    <div class="col-6 offset-3"><hr /></div>
+
+    <div class="mt-3 mb-3">
+      <h4>Where you'll be</h4>
+      <div id="map"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const locationString = "<%= listing.location %>, <%= listing.country %>";
+  const listingTitle = "<%= listing.title %>";
+</script>
+<script src="/js/map.js"></script>

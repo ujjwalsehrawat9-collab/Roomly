@@ -1,0 +1,25 @@
+// Central list of listing categories.
+// Used by: models/listing.js (enum), controllers/listing.js (passed to views),
+// views/listings/new.ejs, edit.ejs, index.ejs (filter bar), show.ejs (category badge).
+module.exports = [
+  { value: "Rooms", label: "Rooms", icon: "fa-solid fa-bed" },
+  { value: "Iconic-Cities", label: "Iconic Cities", icon: "fa-solid fa-mountain-city" },
+  { value: "Mountains", label: "Mountains", icon: "fa-solid fa-mountain-sun" },
+  { value: "Castles", label: "Castles", icon: "fa-brands fa-fort-awesome" },
+  { value: "Boat", label: "Boat", icon: "fa-solid fa-sailboat" },
+  { value: "Ski-in-out", label: "Ski-in/out", icon: "fa-solid fa-person-snowboarding" },
+  { value: "Apartment", label: "Apartment", icon: "fa-solid fa-building" },
+  { value: "New", label: "New", icon: "fa-solid fa-key" },
+  { value: "Woodlands", label: "Woodlands", icon: "fa-solid fa-tree-city" },
+  { value: "Lake", label: "Lake", icon: "fa-solid fa-water" },
+  { value: "Amazing-Pools", label: "Amazing Pools", icon: "fa-solid fa-person-swimming" },
+  { value: "Cabins", label: "Cabins", icon: "fa-solid fa-house" },
+  { value: "Camping", label: "Camping", icon: "fa-solid fa-campground" },
+  { value: "Farm", label: "Farm", icon: "fa-solid fa-cow" },
+  { value: "Arctic", label: "Arctic", icon: "fa-solid fa-snowflake" },
+  { value: "Beach", label: "Beach", icon: "fa-solid fa-umbrella-beach" },
+  { value: "Countryside", label: "Countryside", icon: "fa-solid fa-house-chimney-window" },
+  { value: "Bed-and-Breakfasts", label: "Bed & Breakfasts", icon: "fa-solid fa-mug-hot" },
+  { value: "Campsite", label: "Campsite", icon: "fa-solid fa-tents" },
+  { value: "Historical-Homes", label: "Historical Homes", icon: "fa-solid fa-landmark" },
+];

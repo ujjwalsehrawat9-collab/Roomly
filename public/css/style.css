@@ -1,0 +1,653 @@
+/* =========================================================
+   Locasa — stylesheet
+   Visually adapted from the WanderLust reference UI, kept
+   consistent with Locasa's existing brand color (#fe424d)
+   and its Leaflet-based map (no Mapbox).
+   ========================================================= */
+
+body {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  flex: 1;
+  max-width: 95%;
+}
+
+/* ---------- Navbar ---------- */
+.navbar {
+  height: 4rem;
+  background-color: white;
+}
+
+.fa-compass-drafting {
+  color: #fe424d;
+  font-size: 2rem;
+}
+
+.nav-link {
+  color: #222222 !important;
+  margin: 0 0.5rem !important;
+}
+
+#web-title {
+  color: #fe424d !important;
+  font-size: 1.7rem;
+  margin-left: -0.5rem !important;
+  margin-right: auto !important;
+  padding-left: 0 !important;
+  font-family: "Kaushan Script", cursive;
+}
+
+.navbar-nav {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-search {
+  display: flex;
+  align-items: center;
+}
+
+.search-inp {
+  margin-left: 1.25rem;
+  border-radius: 2rem;
+  font-size: 0.9rem;
+  width: 14.5rem;
+}
+
+.search-btn {
+  background-color: #fe424d;
+  color: #fff;
+  border-radius: 2rem;
+  padding: 0 1rem;
+}
+
+.search-btn:hover,
+.search-btn:active {
+  background-color: #e63946 !important;
+  color: #fff !important;
+}
+
+.search-btn i {
+  display: inline;
+  margin-right: 0.5rem;
+}
+
+.dropdown {
+  margin-left: auto !important;
+}
+
+.dropdown button {
+  width: auto !important;
+  height: 3rem;
+  border-radius: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dropdown-menu {
+  margin-top: 0.5rem !important;
+  width: 14rem;
+  padding: 0.7rem;
+  transform: translateX(-65%);
+}
+
+.fa-circle-user {
+  font-size: 1.5rem;
+}
+
+#responsive-registration {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .dropdown {
+    display: none;
+  }
+
+  #web-title {
+    font-size: 1.6rem !important;
+  }
+
+  #responsive-registration {
+    display: inline;
+    margin: 1rem;
+  }
+
+  .navbar-collapse {
+    text-align: center;
+  }
+
+  .nav-search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    margin-bottom: -0.5rem;
+  }
+
+  .navbar-nav {
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  .container-fluid {
+    background-color: white;
+  }
+}
+
+/* ---------- Flash / alerts ---------- */
+.alert {
+  margin-top: 0.5rem !important;
+  font-size: 1rem;
+  padding: 0.7rem !important;
+  margin-bottom: -0.4rem;
+}
+
+.btn-close {
+  padding: 1rem !important;
+}
+
+@media (max-width: 767px) {
+  .alert {
+    font-size: 0.9rem;
+    padding: 0.6rem !important;
+  }
+
+  .btn-close {
+    padding: 0.9rem !important;
+  }
+}
+
+/* ---------- Footer ---------- */
+footer {
+  margin-top: auto;
+}
+
+.f-info {
+  text-align: center;
+  min-height: 8rem;
+  background-color: #ebebeb;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.f-info-links,
+.f-info-socials,
+.f-info-brand {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.f-info-socials i {
+  font-size: 1.2rem;
+  margin-right: 1rem;
+}
+
+.f-info-links a {
+  text-decoration: none !important;
+  color: #222222 !important;
+}
+
+.f-info-links a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Category filter bar ---------- */
+#filter-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+  flex-wrap: wrap;
+}
+
+#filters-container {
+  overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  flex: 1;
+  position: relative;
+  scrollbar-width: none;
+}
+
+#filters-container::-webkit-scrollbar {
+  display: none;
+}
+
+#filters {
+  display: flex;
+  width: max-content;
+}
+
+.filter {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  text-align: center;
+  margin-right: 2rem;
+  margin-top: 1rem;
+  opacity: 0.7;
+}
+
+.filter:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.filter p {
+  font-size: 0.8rem;
+  margin-top: 0.2rem;
+}
+
+.filter a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.scroll-btn {
+  background-color: #fff;
+  border: 0.1rem solid #cccccc;
+  border-radius: 50%;
+  color: #a6a6a6;
+  cursor: pointer;
+  z-index: 10;
+  width: 2.2rem;
+  height: 2.2rem;
+}
+
+.scroll-btn.left-btn {
+  margin-right: 1rem;
+}
+
+.scroll-btn.right-btn {
+  margin-left: 1rem;
+}
+
+.tax-toggle {
+  border: 0.1rem solid #a6a6a6;
+  border-radius: 1rem;
+  height: 3rem;
+  padding: 1rem;
+  margin-left: 1rem;
+  display: flex;
+  margin-top: 0.9rem;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.tax-info {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .tax-toggle {
+    flex-basis: 100%;
+    text-align: left;
+    margin-top: 0 !important;
+    margin-left: 0 !important;
+    font-size: 0.8rem !important;
+    height: 2rem !important;
+    border: none;
+    justify-content: center;
+  }
+
+  .toggle-container {
+    padding: 0.5rem 1rem;
+    border: 0.1rem solid #a6a6a6;
+    border-radius: 0.7rem;
+  }
+
+  .scroll-btn {
+    visibility: hidden;
+    margin: 0 -1.75rem;
+  }
+}
+
+/* ---------- Listing cards ---------- */
+.listing-link {
+  text-decoration: none;
+}
+
+.listing-card {
+  border: none !important;
+  margin-bottom: 2rem;
+  text-decoration: none;
+}
+
+.card-img-top {
+  border-radius: 1rem !important;
+  width: 100% !important;
+  object-fit: cover !important;
+}
+
+.listing-index-img {
+  height: 17rem !important;
+}
+
+.listing-card-body {
+  padding: 0 !important;
+}
+
+.listing-card-text {
+  font-weight: 400 !important;
+  text-decoration: none !important;
+  padding: 0 0.5rem;
+}
+
+.card-img-overlay {
+  opacity: 0;
+}
+
+.card-img-overlay:hover {
+  opacity: 0.15;
+  background-color: white;
+}
+
+.category-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background-color: #f7f7f7;
+  border: 1px solid #e2e2e2;
+  color: #444;
+  border-radius: 1rem;
+  padding: 0.15rem 0.7rem;
+  font-size: 0.78rem;
+  margin: 0.3rem 0.5rem;
+}
+
+.category-badge i {
+  color: #fe424d;
+}
+
+@media (max-width: 1024px) {
+  .row-cols-adjust > * {
+    flex: 0 0 auto;
+    width: calc(100% / 3);
+  }
+  .listing-index-img {
+    height: 15rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .row-cols-adjust > * {
+    flex: 0 0 auto;
+    width: calc(100% / 2);
+  }
+}
+
+@media (max-width: 550px) {
+  .row-cols-adjust > * {
+    flex: 0 0 auto;
+    width: calc(100% / 1);
+  }
+}
+
+/* ---------- Buttons ---------- */
+.add-btn,
+.edit-btn {
+  background-color: #fe424d !important;
+  border: none !important;
+  border-radius: 2rem;
+  padding: 0.5rem 1.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.add-btn:hover,
+.edit-btn:hover {
+  background-color: #222222 !important;
+}
+
+.reserve-btn {
+  border-radius: 2rem;
+  padding: 0.5rem 2rem;
+  font-weight: 600;
+}
+
+.show-btns {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.show-btns .btn,
+.show-btns button {
+  border-radius: 2rem;
+}
+
+/* ---------- Forms ---------- */
+.login-signup-form-inp {
+  width: 32%;
+  margin: 0 auto;
+}
+
+.new-edit-form-inp {
+  width: 55%;
+  margin: 0 auto;
+}
+
+@media (max-width: 1300px) {
+  .login-signup-form-inp {
+    width: 45%;
+  }
+  .new-edit-form-inp {
+    width: 65%;
+  }
+}
+
+@media (max-width: 991px) {
+  .login-signup-form-inp {
+    width: 60%;
+  }
+  .new-edit-form-inp {
+    width: 80%;
+  }
+}
+
+@media (max-width: 576px) {
+  .login-signup-form-inp,
+  .new-edit-form-inp {
+    width: 100%;
+  }
+}
+
+.form-control:focus {
+  border-color: #fe424d;
+  box-shadow: 0 0 0 0.2rem rgba(254, 66, 77, 0.15);
+}
+
+.invalid-feedback {
+  font-size: 0.85rem;
+}
+
+/* ---------- Category picker (create / edit listing) ---------- */
+.category-choose .form-check {
+  border: 1px solid #e2e2e2;
+  border-radius: 0.7rem;
+  padding: 0.6rem 0.9rem 0.6rem 2.2rem;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.category-choose .form-check:hover {
+  border-color: #fe424d;
+  background-color: #fff6f6;
+  cursor: pointer;
+}
+
+.category-choose .form-check-input:checked ~ .form-check-label {
+  color: #fe424d;
+  font-weight: 600;
+}
+
+.category-choose .form-check-label i {
+  color: #fe424d;
+  width: 1.3rem;
+}
+
+/* ---------- Show listing page ---------- */
+.listing-title {
+  padding-left: 0.5rem;
+}
+
+.show-img {
+  height: 26rem;
+  object-fit: cover;
+}
+
+@media (max-width: 991px) {
+  .show-img {
+    height: 20rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .show-img {
+    height: 14rem;
+  }
+}
+
+.show-card {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* ---------- Amenities & add-on services ---------- */
+.offers {
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem;
+}
+
+.offers i {
+  font-size: 1.1rem;
+  color: #fe424d;
+}
+
+.offers span {
+  font-size: 1rem;
+  color: #222;
+  margin-left: 0.3rem;
+}
+
+.modal-body {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.modal-body ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.modal-body ul h5 {
+  font-size: 1.05rem;
+  margin-bottom: 0.6rem;
+}
+
+.modal-body ul li {
+  padding: 0.2rem 0;
+  color: #333;
+}
+
+.modal-body ul hr {
+  margin: 0.9rem 0;
+}
+
+/* ---------- Reserve success modal ---------- */
+.reserve-success-icon {
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  background-color: #e8f8ee;
+  color: #1e9e5a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  margin: 0 auto 1rem;
+}
+
+#reserveModal .modal-content {
+  border-radius: 1rem;
+  text-align: center;
+  padding: 1.5rem 1rem;
+  border: none;
+}
+
+#reserveModal .modal-header {
+  border-bottom: none;
+  justify-content: center;
+}
+
+#reserveModal .modal-footer {
+  border-top: none;
+  justify-content: center;
+}
+
+/* ---------- Map (Leaflet) ---------- */
+#map {
+  width: 100%;
+  height: 26rem;
+  border-radius: 1rem;
+  margin-top: 1rem;
+  overflow: hidden;
+  border: 1px solid #e2e2e2;
+}
+
+@media (max-width: 991px) {
+  #map {
+    height: 20rem;
+  }
+}
+
+@media (max-width: 576px) {
+  #map {
+    height: 15rem;
+  }
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 0.7rem;
+}
+
+.map-click {
+  text-align: center;
+}
+
+.map-click h4 {
+  font-size: 1.05rem;
+  margin-bottom: 0.2rem;
+}
+
+.map-click p {
+  font-size: 0.85rem;
+  color: #555;
+  margin-bottom: 0;
+}
+
+/* ---------- Reviews ---------- */
+.review-comment {
+  font-size: 0.95rem;
+}
+
+/* ---------- Error page ---------- */
+.error-card {
+  border-radius: 1rem;
+}

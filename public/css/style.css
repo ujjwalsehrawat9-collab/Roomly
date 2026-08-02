@@ -23,23 +23,42 @@ body {
   background-color: white;
 }
 
-.fa-compass-drafting {
-  color: #fe424d;
-  font-size: 2rem;
+.navbar > .container-fluid {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .nav-search {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.navbar-brand {
+  flex: 0 0 auto;
+  margin: 0 !important;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-collapse {
+  flex: 1 1 auto !important;
+}
+
+#brand-logo {
+  height: 2.3rem;
+  width: auto;
+  display: block;
 }
 
 .nav-link {
   color: #222222 !important;
   margin: 0 0.5rem !important;
-}
-
-#web-title {
-  color: #fe424d !important;
-  font-size: 1.7rem;
-  margin-left: -0.5rem !important;
-  margin-right: auto !important;
-  padding-left: 0 !important;
-  font-family: "Kaushan Script", cursive;
 }
 
 .navbar-nav {
@@ -62,10 +81,11 @@ body {
 }
 
 .search-btn {
-  background-color: #fe424d;
-  color: #fff;
+  background-color: #fe424d !important;
+  color: #fff !important;
   border-radius: 2rem;
   padding: 0 1rem;
+  border: none !important;
 }
 
 .search-btn:hover,
@@ -112,9 +132,9 @@ body {
     display: none;
   }
 
-  #web-title {
-    font-size: 1.6rem !important;
-  }
+  #brand-logo {
+  height: 1.9rem;
+}
 
   #responsive-registration {
     display: inline;
@@ -435,6 +455,92 @@ footer {
 .login-signup-form-inp {
   width: 32%;
   margin: 0 auto;
+}
+
+/* ---------- Auth cards (login / signup) ---------- */
+.auth-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 3rem 1rem;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  background: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+  padding: 2.5rem 2.25rem;
+}
+
+.auth-card h3 {
+  text-align: center;
+  font-weight: 800;
+  color: #222222;
+  margin-bottom: 2rem;
+}
+
+.auth-card .form-label {
+  font-weight: 600;
+  color: #222222;
+  font-size: 0.92rem;
+  margin-bottom: 0.4rem;
+}
+
+.auth-card .form-control {
+  border-radius: 0.6rem;
+  border: 1px solid #d9d9d9;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.95rem;
+}
+
+.auth-card .form-control:focus {
+  border-color: #fe424d;
+  box-shadow: 0 0 0 0.2rem rgba(254, 66, 77, 0.15);
+}
+
+.auth-card .mb-3 {
+  margin-bottom: 1.3rem !important;
+}
+
+.auth-btn {
+  width: 100%;
+  background-color: #222222;
+  color: #ffffff;
+  border: none;
+  border-radius: 0.6rem;
+  padding: 0.75rem 0;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.auth-btn:hover {
+  background-color: #fe424d;
+  color: #ffffff;
+}
+
+.auth-btn:active {
+  transform: scale(0.99);
+}
+
+.auth-switch {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.92rem;
+  color: #444444;
+}
+
+.auth-switch a {
+  color: #fe424d;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+@media (max-width: 576px) {
+  .auth-card {
+    padding: 2rem 1.4rem;
+  }
 }
 
 .new-edit-form-inp {
